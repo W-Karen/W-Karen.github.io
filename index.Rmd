@@ -1,27 +1,31 @@
 ---
-title: "My awesome website"
+title: "My awesome website" # 大标题
 output: 
   html_document:
     toc: true
     toc_float: true
+    theme:flatly
 ---
 
-# This is Jeff's awesome website
+# This is Jeff's awesome website #一级标题，在左侧目录栏显示
 
-Here's a gif of elmo
+Here's a gif of elmo  #正文
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif) ## 插入图片
+
 
 
 You can add text
 
-* and list
+* and list  ##点
 * with extra bullets
 
-You can *FORMAT* and **bold**
+You can *FORMAT* and **bold**  ## 斜体和加粗
 
 This is a [link](https://www.google.com/) to a good data science tool. Here is a link to [p8105](https://p8105.com/index.html). SOON: a link to another 
 Here's a link to the [about](about.html)page.
+
+## 插入网页链接
 
 You can also still use R
 
