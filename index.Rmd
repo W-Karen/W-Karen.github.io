@@ -50,3 +50,6 @@ plot_df |>
 
 
 
+## other stuff on this page
+
+Plotly stuff [plotly](plotly.html)
