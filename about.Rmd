@@ -1,10 +1,24 @@
 ---
-title: "About"
+title: "About me"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-# About this website
+I am a cheerful and easy-going girl. I am good at sports, like to eat and drink, shopping and taking pictures. If you want to know more about me in life, please read on!
+
+### National Level 2 swimmer, Tianjin registered certified rower, water polo player
+
+* Consistently swimming training for 16 years, won the top three of the provincial swimming competition
+
+* Learn and participate in water polo training for six years, represented Hexi District in Tianjin Water Polo Competition and achieved the first place
+
+* Practicing rowing for six years and represented Tianjin in the international rowing competition and obtained the sixth place, and represented the school in the Tianjin competition and obtained the first place.
+
+![](p1.jpg)
+
+![](p2.jpg)
+
+![](p3.jpg)
 

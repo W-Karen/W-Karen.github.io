@@ -1,55 +1,58 @@
 ---
-title: "My awesome website" # 大标题
+title: "Kairui Wang"
 output: 
   html_document:
-    toc: true
-    toc_float: true
-    theme:flatly
+    theme: cosmo
 ---
 
-# This is Jeff's awesome website #一级标题，在左侧目录栏显示
+Bachelor of Preventive Medicine, Tianjin Medical University
 
-Here's a gif of elmo  #正文
+Currently enrolled in the Master Program in Biostatistics at Columbia University Mailman School of Public Health
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif) ## 插入图片
+![](毕业照片.jpg)
 
+# EDUCATION BACKGROUND
 
+<u>Bachelor of Medicine</u>   
 
-You can add text
+**Tianjin Medical University **  09/2018-06/2023
 
-* and list  ##点
-* with extra bullets
+* Major: Preventive Medicine
 
-You can *FORMAT* and **bold**  ## 斜体和加粗
+<u>Master of Science</u>   
 
-This is a [link](https://www.google.com/) to a good data science tool. Here is a link to [p8105](https://p8105.com/index.html). SOON: a link to another 
-Here's a link to the [about](about.html)page.
+**Columbia University Mailman School of Public Health**  09/2023-05/2025
 
-## 插入网页链接
+* Major: Biostatistics
 
-You can also still use R
+# RESEARCH EXPERIENCE
 
-```{r}
-library(tidyverse)
-```
+**A SEER Database Based Study of Metastasis Patterns and Prognosis in Neuroblastoma Patients**
 
+<u>Bachelor’s Thesis Project</u>
 
-```{r}
-plot_df = 
-  tibble(
-    x = runif(100),
-    y = 1 + 2 * x + rnorm(100)
-  )
+**Project Description**: Use R and SPSS to analyze the Incidence and Outcomes of Neuroblastoma
+among children, teenagers and adults using data in the Surveillance, Epidemiology, and End Results Program (SEER), trying to reveal related factors.
 
-plot_df |> 
-  ggplot(aes(x = x, y = y)) +
-  geom_point()
-```
+![](基于SEER数据库对神经母细胞瘤患者的转移模式和预后的研究.pdf)
 
-# Here's a new section
+**National Human Biomonitoring Project**
 
+<u>Supervisor: Yue Zhao, A/Prof.</u>
 
+Research assistant
 
-## other stuff on this page
+10-12/ 2021
 
-Plotly stuff [plotly](plotly.html)
+**Project Description**: Through on-site epidemiological surveys of the population in China and monitoring environmental pollutants in human biological tissues, we obtained representative national data on the human exposure load of environmental toxic and hazardous chemical substances; through the analysis of the relationship between the level of environmental chemical load and health effects in the population, we assessed the health risk of environmental toxic compound exposure in the population in China.
+
+**Research on the Effect and Mechanism of Telomeric Folic Acid on Neuronal Apoptosis and Cognitive Decline in the Elderly**
+
+<u>Supervisor: Guowei Huang, Prof.</u>
+
+Research assistant
+
+03-05/2021
+
+**Project Description**: Analyze the relationship between diet and MCI in the elderly in Tianjin Baodi using the dietary inflammatory index (DII) to provide diet advice.
+
