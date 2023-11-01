@@ -10,6 +10,8 @@ output:
 library(flexdashboard)
 
 library(tidyverse)
+library(httr)
+library(jsonlite)
 library(plotly)
 library(p8105.datasets)
 ```

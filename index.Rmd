@@ -2,8 +2,6 @@
 title: "Kairui Wang"
 output: 
   html_document:
-    toc: true
-    toc_float: true
     theme: cosmo
 ---
 
@@ -13,7 +11,7 @@ Currently enrolled in the Master Program in Biostatistics at Columbia University
 
 ![](毕业照片.jpg)
 
-# EDUCATION BACKGROUND
+### EDUCATION BACKGROUND
 
 <u>Bachelor of Medicine</u>   
 
