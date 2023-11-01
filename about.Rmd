@@ -4,6 +4,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    theme: cosmo
 ---
 
 I am a cheerful and easy-going girl. I am good at sports, like to eat and drink, shopping and taking pictures. If you want to know more about me in life, please read on!
@@ -16,9 +17,18 @@ I am a cheerful and easy-going girl. I am good at sports, like to eat and drink,
 
 * Practicing rowing for six years and represented Tianjin in the international rowing competition and obtained the sixth place, and represented the school in the Tianjin competition and obtained the first place.
 
-![](p1.jpg)
+![](IMG_3720.jpg)
 
-![](p2.jpg)
+![](IMG_6605.jpg)
 
-![](p3.jpg)
+![](IMG_6601.jpg)
 
+![](IMG_6598.jpg)
+
+### News Media Center, Tianjin Students Federation 
+
+* Participated in publicizing activities, media platform operation, new media product design, etc.
+
+### Publicizing Department, the Student Union of Tianjin Medical University
+
+* Took charge of publicizing activities for large-scale events and online platform management.

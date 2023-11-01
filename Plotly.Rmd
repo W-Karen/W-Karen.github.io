@@ -6,7 +6,6 @@ output:
     toc_float: true
 ---
 
-# Plotly
 
 We're going to 
 
@@ -61,5 +60,152 @@ nyc_airbnb |>
   plot_ly(
     x = ~neighbourhood, y = ~n, color = ~neighbourhood, 
     type = "bar", colors = "viridis")
+```
+
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Set your working directory to the folder where the CSV file is located
+setwd("your/directory/path")
+
+# Read the CSV file into a data frame
+restaurant_data <- read.csv("DOHMH_New_York_City_Restaurant_Inspection_Results_20231031.csv")
+
+```
+
+```{r}
+# Load necessary libraries
+library(p8105.datasets)
+library(ggplot2)
+
+# Load the restaurant inspection data
+restaurant_data <- read.csv("DOHMH_New_York_City_Restaurant_Inspection_Results_20231031.csv")
+
+# Create a bar plot of restaurant grades
+ggplot(restaurant_data, aes(x = grade)) +
+  geom_bar() +
+  labs(title = "Distribution of Restaurant Grades", x = "Grade", y = "Count")
+
+```
+
+```{r}
+# Assuming "inspection_score" and "critical_violation_count" are the actual column names in your dataset
+ggplot(restaurant_data, aes(x = inspection_score, y = critical_violation_count)) +
+  geom_point() +
+  labs(title = "Inspection Score vs. Critical Violation Count",
+       x = "Inspection Score", y = "Critical Violation Count")
+
+
+```
+
+```{r}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+```
+
+```{r}
+get_all_inspections = function(url) {
+  
+  all_inspections = vector("list", length = 0)
+  
+  loop_index = 1
+  chunk_size = 50000
+  DO_NEXT = TRUE
+  
+  while (DO_NEXT) {
+    message("Getting data, page ", loop_index)
+    
+    all_inspections[[loop_index]] = 
+      GET(url,
+          query = list(`$order` = "zipcode",
+                       `$limit` = chunk_size,
+                       `$offset` = as.integer((loop_index - 1) * chunk_size)
+                       )
+          ) %>%
+      content("text") %>%
+      fromJSON() %>%
+      as_tibble()
+    
+    DO_NEXT = dim(all_inspections[[loop_index]])[1] == chunk_size
+    loop_index = loop_index + 1
+  }
+  
+  all_inspections
+  
+}
+
+url = "https://data.cityofnewyork.us/resource/43nn-pn8j.json"
+
+nyc_inspections = 
+  get_all_inspections(url) %>%
+  bind_rows() 
+
+```
+
+```{r}
+nyc_inspections |> 
+  count(camis)
+```
+
+
+
+```{r}
+nyc_inspections_tidy <- nyc_inspections %>%
+   mutate(
+    grade_date = as.POSIXct(grade_date, format = "%Y-%m-%dT%H:%M:%S")
+  ) %>%
+  group_by(camis) %>%
+  filter(grade_date == max(grade_date)) %>%
+  ungroup() %>%
+  select(
+    camis, borough = boro, building, street, zipcode, cuisine_description,
+    score, grade, inspection_type, latitude, longitude
+  ) %>%
+  filter(
+    !is.na(grade)
+  )
+
+nyc_inspections_tidy <- distinct(nyc_inspections_tidy, camis, .keep_all = TRUE)
+```
+
+```{r}
+nyc_inspections_tidy %>%
+  mutate(text_label = str_c("Score: ", score, "\nGrade: ", grade)) %>%
+  plot_ly(
+    x = ~latitude, y = ~longitude, color = ~score, text = ~text_label,
+    type = "scatter", mode = "markers", alpha = 0.5
+  )
+
+```
+
+```{r}
+nyc_inspections_tidy %>%
+  mutate(cuisine_description = forcats::fct_reorder(cuisine_description, score)) %>%
+  plot_ly(y = ~score, color = ~cuisine_description, type = "box")
+```
+
+```{r}
+nyc_inspections_tidy %>%
+  count(borough) %>%
+  plot_ly(
+    x = ~borough,
+    y = ~n,
+    color = ~borough,
+    type = "bar",
+    colors = "viridis"
+  ) %>%
+  layout(
+    title = "Counts of Inspections by Borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Count")
+  )
+```
+
+```{r}
+
 ```
 

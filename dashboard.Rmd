@@ -15,19 +15,62 @@ library(p8105.datasets)
 ```
 
 ```{r}
-data("nyc_airbnb")
+get_all_inspections = function(url) {
+  
+  all_inspections = vector("list", length = 0)
+  
+  loop_index = 1
+  chunk_size = 50000
+  DO_NEXT = TRUE
+  
+  while (DO_NEXT) {
+    message("Getting data, page ", loop_index)
+    
+    all_inspections[[loop_index]] = 
+      GET(url,
+          query = list(`$order` = "zipcode",
+                       `$limit` = chunk_size,
+                       `$offset` = as.integer((loop_index - 1) * chunk_size)
+                       )
+          ) %>%
+      content("text") %>%
+      fromJSON() %>%
+      as_tibble()
+    
+    DO_NEXT = dim(all_inspections[[loop_index]])[1] == chunk_size
+    loop_index = loop_index + 1
+  }
+  
+  all_inspections
+  
+}
 
-nyc_airbnb = 
-  nyc_airbnb |> 
-  mutate(stars = review_scores_location / 2) |> 
-  select(
-    borough = neighbourhood_group, neighbourhood, stars, price, room_type, lat, long) |> 
-  filter(
-    borough == "Manhattan",
-    room_type == "Entire home/apt",
-    price %in% 100:500)
+url = "https://data.cityofnewyork.us/resource/43nn-pn8j.json"
+
+nyc_inspections = 
+  get_all_inspections(url) %>%
+  bind_rows() 
+
 ```
 
+```{r}
+nyc_inspections_tidy <- nyc_inspections %>%
+   mutate(
+    grade_date = as.POSIXct(grade_date, format = "%Y-%m-%dT%H:%M:%S")
+  ) %>%
+  group_by(camis) %>%
+  filter(grade_date == max(grade_date)) %>%
+  ungroup() %>%
+  select(
+    camis, borough = boro, building, street, zipcode, cuisine_description,
+    score, grade, inspection_type, latitude, longitude
+  ) %>%
+  filter(
+    !is.na(grade)
+  )
+
+nyc_inspections_tidy <- distinct(nyc_inspections_tidy, camis, .keep_all = TRUE)
+```
 
 
 This is a dashboard
@@ -38,9 +81,9 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-nyc_airbnb |> 
-  mutate(neighbourhood = fct_reorder(neighbourhood,price)) |> #按照价格排序
-  plot_ly(y = ~price, color = ~neighbourhood, type = "box")
+nyc_inspections_tidy %>%
+  mutate(cuisine_description = forcats::fct_reorder(cuisine_description, score)) %>%
+  plot_ly(y = ~score, color = ~cuisine_description, type = "box")
 ```
 
 Column {data-width=350}
@@ -49,21 +92,20 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
-nyc_airbnb |> 
-  mutate(text_lable = str_c("Price:$", price, "\nRating: ", stars)) |> 
+nyc_inspections_tidy %>%
+  mutate(text_label = str_c("Score: ", score, "\nGrade: ", grade)) %>%
   plot_ly(
-    x = ~lat, y = ~long, color = ~price, text = ~text_lable,
-    type = "scatter", mode = "markers", alpha = 0.5)
+    x = ~latitude, y = ~longitude, color = ~score, text = ~text_label,
+    type = "scatter", mode = "markers", alpha = 0.5
+  )
+
 ```
 
 ### Chart C
 
 ```{r}
-nyc_airbnb |>  
-  count(neighbourhood) |> 
-  mutate(neighbourhood = fct_reorder(neighbourhood, n)) |>  
-  plot_ly(
-    x = ~neighbourhood, y = ~n, color = ~neighbourhood, 
-    type = "bar", colors = "viridis")
+nyc_inspections_tidy %>%
+  mutate(cuisine_description = forcats::fct_reorder(cuisine_description, score)) %>%
+  plot_ly(y = ~score, color = ~cuisine_description, type = "box")
 ```
 
