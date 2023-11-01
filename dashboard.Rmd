@@ -13,6 +13,7 @@ library(tidyverse)
 library(httr)
 library(jsonlite)
 library(plotly)
+library(ggplot2)
 library(p8105.datasets)
 ```
 
@@ -107,7 +108,18 @@ nyc_inspections_tidy %>%
 
 ```{r}
 nyc_inspections_tidy %>%
-  mutate(cuisine_description = forcats::fct_reorder(cuisine_description, score)) %>%
-  plot_ly(y = ~score, color = ~cuisine_description, type = "box")
+  count(borough) %>%
+  plot_ly(
+    x = ~borough,
+    y = ~n,
+    color = ~borough,
+    type = "bar",
+    colors = "viridis"
+  ) %>%
+  layout(
+    title = "Counts of Inspections by Borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Count")
+  )
 ```
 
